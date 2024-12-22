@@ -9,7 +9,7 @@ protected:
 public:
     Human();
     Human(const string& name, int age);
-    virtual void display() const = 0; // Pure virtual function
+    virtual void display() const = 0; 
     void set_age(int age);
     void set_name(const string& name);
     int get_age() const;

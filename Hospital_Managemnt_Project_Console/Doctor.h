@@ -25,5 +25,5 @@ public:
     string get_id() const;
     Specialization get_specialization() const;
     string get_password() const;
-    void set_id(const string& new_id); // For loading from file
+    void set_id(const string& new_id); 
 };

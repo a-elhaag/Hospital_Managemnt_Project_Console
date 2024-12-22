@@ -14,13 +14,13 @@ void patientMenu(HospitalManagement& hm, Patient* patient);
 void clearInputBuffer();
 
 int main() {
-#ifdef _WIN32
-    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    DWORD dwMode = 0;
-    GetConsoleMode(hOut, &dwMode);
-    dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-    SetConsoleMode(hOut, dwMode);
-#endif
+//#ifdef _WIN32
+//    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+//    DWORD dwMode = 0;
+//    GetConsoleMode(hOut, &dwMode);
+//    dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+//    SetConsoleMode(hOut, dwMode);
+//#endif
 
     HospitalManagement hm;
     int roleChoice;
@@ -73,7 +73,7 @@ int main() {
     return 0;
 }
 
-// Function to clear the input buffer
+
 void clearInputBuffer() {
     char c;
     while ((c = cin.get()) != '\n' && c != EOF);
