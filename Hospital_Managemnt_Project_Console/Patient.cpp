@@ -1,21 +1,23 @@
+// Patient.cpp
 #include "Patient.h"
 #include "ConsoleColors.h"
+#include <iostream>
 
 int Patient::patient_counter = 0;
 
-Patient::Patient() : Human() {
+Patient::Patient() : Human(), medical_history("") {
     patient_counter++;
     patient_id = "P" + to_string(patient_counter);
-    cout << "Please enter your medical history: ";
-    getline(cin, medical_history);
-    cout << "Set your password: ";
-    cin >> password;
-    cin.ignore();
-    Console::print_colored("Patient registered successfully! Your Patient ID is " + patient_id + ".", Console::GREEN, Console::BG_CYAN);
 }
 
-void Patient::set_medical_history(const string& history) {
-    medical_history = history;
+Patient::Patient(const string& name_, int age_, const string& medical_history_)
+    : Human(name_, age_), medical_history(medical_history_) {
+    patient_counter++;
+    patient_id = "P" + to_string(patient_counter);
+}
+
+void Patient::display() const {
+    Console::print_colored("Patient ID: " + patient_id + ", Name: " + name + ", Age: " + to_string(age) + ", Medical History: " + medical_history, Console::GREEN);
 }
 
 string Patient::get_patient_id() const {
@@ -26,21 +28,17 @@ string Patient::get_medical_history() const {
     return medical_history;
 }
 
-string Patient::get_password() const {
-    return password;
+void Patient::set_patient_id(const string& new_id) {
+    patient_id = new_id;
+    // Update patient_counter based on the numeric part of id
+    if (new_id.length() > 1) {
+        int num = stoi(new_id.substr(1));
+        if (num > patient_counter) {
+            patient_counter = num;
+        }
+    }
 }
 
-void Patient::set_password(const string& pwd) {
-    password = pwd;
-}
-
-void Patient::display() const {
-    cout << Console::BG_CYAN << Console::GREEN;
-    cout << "Patient ID: " << patient_id << ", Name: " << name << ", Age: " << age << ", Medical History: " << medical_history << endl;
-    cout << Console::RESET;
-}
-
-ostream& operator<<(ostream& os, const Patient& patient) {
-    os << "Patient ID: " << patient.patient_id << ", Name: " << patient.name << ", Age: " << patient.age << ", Medical History: " << patient.medical_history;
-    return os;
+void Patient::set_medical_history(const string& history) {
+    medical_history = history;
 }

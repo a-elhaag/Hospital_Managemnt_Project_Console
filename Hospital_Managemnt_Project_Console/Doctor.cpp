@@ -1,38 +1,35 @@
 #include "Doctor.h"
 #include "ConsoleColors.h"
+#include <iostream>
 
 int Doctor::doc_counter = 0;
 
-Doctor::Doctor() : Human() {
+Doctor::Doctor() : Human(), specialization(Specialization::GENERAL), password("") {
     doc_counter++;
-    cout << "Choose your specialization:\n1) General\n2) Cardiologist\n3) Neurologist\n4) Pediatrician\n5) Surgeon\n";
-    int choice;
-    while (true) {
-        cout << "Enter choice (1-5): ";
-        cin >> choice;
-        cin.ignore();
-        if (choice >= 1 && choice <= 5) {
-            specialization = static_cast<Specialization>(choice);
-            break;
-        }
-    }
-    id = "";
-    switch (specialization) {
-    case General: id += "G"; break;
-    case Cardiologist: id += "C"; break;
-    case Neurologist: id += "N"; break;
-    case Pediatrician: id += "P"; break;
-    case Surgeon: id += "S"; break;
-    }
-    id += to_string(doc_counter);
-    cout << "Enter your password: ";
-    cin >> password;
-    cin.ignore();
-    Console::print_colored("Welcome Dr. " + name + "! Your ID is " + id + ".", Console::BLUE, Console::BG_WHITE);
+    id = "D" + to_string(doc_counter);
 }
 
-void Doctor::set_specialization(Specialization specialization) {
-    this->specialization = specialization;
+Doctor::Doctor(const string& name_, int age_, Specialization specialization_, const string& password_)
+    : Human(name_, age_), specialization(specialization_), password(password_) {
+    doc_counter++;
+    id = "D" + to_string(doc_counter);
+}
+
+void Doctor::display() const {
+    string spec_str;
+    switch (specialization) {
+    case Specialization::GENERAL: spec_str = "General"; break;
+    case Specialization::CARDIOLOGIST: spec_str = "Cardiologist"; break;
+    case Specialization::NEUROLOGIST: spec_str = "Neurologist"; break;
+    case Specialization::PEDIATRICIAN: spec_str = "Pediatrician"; break;
+    case Specialization::SURGEON: spec_str = "Surgeon"; break;
+    default: spec_str = "Unknown"; break;
+    }
+    Console::print_colored("Doctor ID: " + id + ", Name: " + name + ", Age: " + to_string(age) + ", Specialization: " + spec_str, Console::BLUE);
+}
+
+void Doctor::set_specialization(Specialization spec) {
+    specialization = spec;
 }
 
 string Doctor::get_id() const {
@@ -47,31 +44,13 @@ string Doctor::get_password() const {
     return password;
 }
 
-void Doctor::display() const {
-    cout << Console::BG_WHITE << Console::BLUE;
-    cout << "Doctor ID: " << id << ", Name: " << name << ", Age: " << age << ", Specialization: ";
-    switch (specialization) {
-    case General: cout << "General"; break;
-    case Cardiologist: cout << "Cardiologist"; break;
-    case Neurologist: cout << "Neurologist"; break;
-    case Pediatrician: cout << "Pediatrician"; break;
-    case Surgeon: cout << "Surgeon"; break;
+void Doctor::set_id(const string& new_id) {
+    id = new_id;
+    // Update doc_counter based on the numeric part of id
+    if (new_id.length() > 1) {
+        int num = stoi(new_id.substr(1));
+        if (num > doc_counter) {
+            doc_counter = num;
+        }
     }
-    cout << Console::RESET << endl;
-}
-
-ostream& operator<<(ostream& os, const Doctor& doctor) {
-    os << "Doctor ID: " << doctor.id << ", Name: " << doctor.name << ", Age: " << doctor.age << ", Specialization: ";
-    switch (doctor.specialization) {
-    case General: os << "General"; break;
-    case Cardiologist: os << "Cardiologist"; break;
-    case Neurologist: os << "Neurologist"; break;
-    case Pediatrician: os << "Pediatrician"; break;
-    case Surgeon: os << "Surgeon"; break;
-    }
-    return os;
-}
-
-void Doctor::set_password(const string& password) {
-	this->password = password;
 }

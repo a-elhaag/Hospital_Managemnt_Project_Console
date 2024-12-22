@@ -1,19 +1,16 @@
+// Human.cpp
 #include "Human.h"
 
-Human::Human() {
-    cout << "Please enter your name: ";
-    getline(cin, name);
-    cout << "Please enter your age: ";
-    cin >> age;
-    cin.ignore();
+Human::Human() : name(""), age(0) {}
+
+Human::Human(const string& name_, int age_) : name(name_), age(age_) {}
+
+void Human::set_age(int age_) {
+    age = age_;
 }
 
-void Human::set_age(int age) {
-    this->age = age;
-}
-
-void Human::set_name(const string& name) {
-    this->name = name;
+void Human::set_name(const string& name_) {
+    name = name_;
 }
 
 int Human::get_age() const {
@@ -22,8 +19,4 @@ int Human::get_age() const {
 
 string Human::get_name() const {
     return name;
-}
-
-void Human::display() const {
-    cout << "Name: " << name << ", Age: " << age;
 }

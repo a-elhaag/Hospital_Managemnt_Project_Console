@@ -1,14 +1,14 @@
 #pragma once
 #include "Human.h"
 #include <string>
-using namespace std;
 
-enum Specialization {
-    General = 1,
-    Cardiologist,
-    Neurologist,
-    Pediatrician,
-    Surgeon
+using namespace std;
+enum class Specialization {
+    GENERAL = 1,
+    CARDIOLOGIST,
+    NEUROLOGIST,
+    PEDIATRICIAN,
+    SURGEON
 };
 
 class Doctor : public Human {
@@ -19,11 +19,11 @@ private:
     Specialization specialization;
 public:
     Doctor();
-    void set_specialization(Specialization specialization);
+    Doctor(const string& name, int age, Specialization specialization_, const string& password_);
+    void display() const override;
+    void set_specialization(Specialization spec);
     string get_id() const;
     Specialization get_specialization() const;
     string get_password() const;
-	void set_password(const string& password);
-    void display() const override;
-    friend ostream& operator<<(ostream& os, const Doctor& doctor);
+    void set_id(const string& new_id); // For loading from file
 };

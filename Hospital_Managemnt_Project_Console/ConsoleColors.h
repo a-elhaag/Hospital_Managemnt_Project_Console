@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 using namespace std;
-
 namespace Console {
     const string RESET = "\033[0m";
     const string BLACK = "\033[30m";
